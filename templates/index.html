@@ -38,15 +38,24 @@
                     <h3>Generated Metadata</h3>
                     <div class="meta-item">
                         <strong>Meta Title:</strong>
-                        <p>{{ meta_tags.title }}</p>
+                        <div class="meta-content">
+                            <p id="meta-title">{{ meta_tags.title }}</p>
+                            <button class="copy-btn" data-target="meta-title">Copy</button>
+                        </div>
                     </div>
                     <div class="meta-item">
                         <strong>Meta Description:</strong>
-                        <p>{{ meta_tags.description }}</p>
+                        <div class="meta-content">
+                            <p id="meta-description">{{ meta_tags.description }}</p>
+                            <button class="copy-btn" data-target="meta-description">Copy</button>
+                        </div>
                     </div>
                     <div class="meta-item">
                         <strong>Meta Keywords:</strong>
-                        <p>{{ meta_tags.keywords }}</p>
+                        <div class="meta-content">
+                            <p id="meta-keywords">{{ meta_tags.keywords }}</p>
+                            <button class="copy-btn" data-target="meta-keywords">Copy</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -65,5 +74,35 @@
             </div>
         {% endif %}
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const textToCopy = document.getElementById(targetId).innerText;
+                    
+                    // Create a temporary textarea element to copy the text
+                    const textarea = document.createElement('textarea');
+                    textarea.value = textToCopy;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    
+                    // Change button text to "Copied!"
+                    const originalText = this.innerText;
+                    this.innerText = 'Copied!';
+                    
+                    // Reset button text after 2 seconds
+                    setTimeout(() => {
+                        this.innerText = originalText;
+                    }, 2000);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
