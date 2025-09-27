@@ -36,6 +36,7 @@
                 
                 <div class="meta-data">
                     <h3>Generated Metadata</h3>
+                    <!-- Meta data content remains the same -->
                     <div class="meta-item">
                         <strong>Meta Title:</strong>
                         <div class="meta-content">
@@ -62,12 +63,14 @@
                 <div class="images">
                     <div class="image-container">
                         <h3>Original Image</h3>
-                        <img src="{{ url_for('static', filename='uploads/' + original_image) }}" alt="Original Image">
+                        <!-- *** পরিবর্তন এখানে *** -->
+                        <img src="{{ url_for('serve_image', filename=original_image) }}" alt="Original Image">
                     </div>
                     
                     <div class="image-container">
                         <h3>Resized Image (300px width)</h3>
-                        <img src="{{ url_for('static', filename='uploads/' + resized_image) }}" alt="Resized Image">
+                        <!-- *** পরিবর্তন এখানে *** -->
+                        <img src="{{ url_for('serve_image', filename=resized_image) }}" alt="Resized Image">
                         <a href="{{ url_for('download_file', filename=resized_image) }}" class="btn download-btn">Download Resized Image</a>
                     </div>
                 </div>
@@ -76,6 +79,7 @@
     </div>
 
     <script>
+        // আপনার জাভাস্ক্রিপ্ট কোড এখানে অপরিবর্তিত থাকবে
         document.addEventListener('DOMContentLoaded', function() {
             const copyButtons = document.querySelectorAll('.copy-btn');
             
@@ -84,7 +88,6 @@
                     const targetId = this.getAttribute('data-target');
                     const textToCopy = document.getElementById(targetId).innerText;
                     
-                    // Create a temporary textarea element to copy the text
                     const textarea = document.createElement('textarea');
                     textarea.value = textToCopy;
                     document.body.appendChild(textarea);
@@ -92,11 +95,9 @@
                     document.execCommand('copy');
                     document.body.removeChild(textarea);
                     
-                    // Change button text to "Copied!"
                     const originalText = this.innerText;
                     this.innerText = 'Copied!';
                     
-                    // Reset button text after 2 seconds
                     setTimeout(() => {
                         this.innerText = originalText;
                     }, 2000);
