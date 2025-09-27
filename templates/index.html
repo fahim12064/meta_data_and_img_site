@@ -30,13 +30,12 @@
             </form>
         </div>
         
-        {% if phone_name %}
+        {% if phone_name and resized_image_base64 %}
             <div class="result-container">
                 <h2>Results for: {{ phone_name }}</h2>
                 
                 <div class="meta-data">
                     <h3>Generated Metadata</h3>
-                    <!-- Meta data content remains the same -->
                     <div class="meta-item">
                         <strong>Meta Title:</strong>
                         <div class="meta-content">
@@ -63,15 +62,20 @@
                 <div class="images">
                     <div class="image-container">
                         <h3>Original Image</h3>
-                        <!-- *** পরিবর্তন এখানে *** -->
                         <img src="{{ url_for('serve_image', filename=original_image) }}" alt="Original Image">
                     </div>
                     
                     <div class="image-container">
                         <h3>Resized Image (300px width)</h3>
-                        <!-- *** পরিবর্তন এখানে *** -->
-                        <img src="{{ url_for('serve_image', filename=resized_image) }}" alt="Resized Image">
-                        <a href="{{ url_for('download_file', filename=resized_image) }}" class="btn download-btn">Download Resized Image</a>
+                        <!-- Base64 ডেটা ব্যবহার করে ছবি দেখানো হচ্ছে -->
+                        <img src="data:image/{{ image_format }};base64,{{ resized_image_base64 }}" alt="Resized Image">
+                        
+                        <!-- Base64 ডেটা ব্যবহার করে ডাউনলোড লিঙ্ক তৈরি করা হচ্ছে -->
+                        <a href="data:image/{{ image_format }};base64,{{ resized_image_base64 }}" 
+                           download="{{ resized_filename }}" 
+                           class="btn download-btn">
+                           Download Resized Image
+                        </a>
                     </div>
                 </div>
             </div>
@@ -79,7 +83,6 @@
     </div>
 
     <script>
-        // আপনার জাভাস্ক্রিপ্ট কোড এখানে অপরিবর্তিত থাকবে
         document.addEventListener('DOMContentLoaded', function() {
             const copyButtons = document.querySelectorAll('.copy-btn');
             
